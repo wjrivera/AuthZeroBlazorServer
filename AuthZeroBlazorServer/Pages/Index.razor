@@ -2,13 +2,27 @@
 @attribute [Authorize(Roles = "normal.user,admin.user")]
 
 <h1>Welcome, @_username!</h1>
+
+<br/>
+<h3>Info</h3>
 <ul>
     <li>Auth0 ID: @_authId</li>
     <li>Nickname: @_nickname</li>
     <li>Email: @_email</li>
     <li>Verified: @(_emailVerified ? "Yes" : "No")</li>
 </ul>
+
 <br/>
+<h3>Claims</h3>
+<ol>
+    @foreach (var claim in Claims)
+    {
+        <li>@claim</li>
+    }
+</ol>
+
+<br/>
+<h3>Image</h3>
 <img src="@_picture">
 
 @code
@@ -23,9 +37,16 @@
     private string _authId = "none";
     private string _picture = "";
 
+    public readonly List<string> Claims = new ();
+
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
+        
+        foreach (var claims in state.User.Claims)
+        {
+            Claims.Add($"{claims.Type}: {claims.Value}");
+        }
 
         _username = state.User.Claims
             .Where(c => c.Type.Equals("name"))

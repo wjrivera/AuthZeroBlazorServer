@@ -70,3 +70,7 @@ After following the setup linked below on References, do the following:
 
 [Auth0 Blazor Setup](https://auth0.com/blog/what-is-blazor-tutorial-on-building-webapp-with-authentication/#What-is-Blazor-)
 
+[Guide with Claim Info](https://andrewlock.net/adding-authentication-to-a-blazor-server-app-using-auth0/)
+
+
+
